@@ -1,0 +1,12 @@
+services:
+  db:
+    container_name: h2-container
+    image: oscarfonts/h2:latest # h2 latest version(2024/06/01 : 2.2.224)
+    ports:
+      - 1521:1521 # TCP database server
+      - 8081:81 # Web Interface
+    environment:
+      H2_OPTIONS: -ifNotExists # If DB exists do not re-create
+    volumes:
+      - ./h2/:/opt/h2-data # Mount at ./h2
+    restart: always
