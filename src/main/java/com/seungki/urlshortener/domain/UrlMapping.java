@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Table(name = "url_mapping")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UrlMapping {
 
@@ -30,7 +31,7 @@ public class UrlMapping {
       추후 회원 가입 기능을 추가할 때 사용
      */
     // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "MEMBER_ID")
+    // @JoinColumn(name = "member_id")
     // private Member member;
 
 }
