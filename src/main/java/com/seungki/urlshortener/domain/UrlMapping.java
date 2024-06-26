@@ -18,7 +18,7 @@ public class UrlMapping {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String hashValue;
+    private String shortcode;
 
     @Column(nullable = false)
     private String originalUrl;
