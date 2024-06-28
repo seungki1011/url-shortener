@@ -2,10 +2,9 @@ package com.seungki.urlshortener.repository;
 
 import com.seungki.urlshortener.domain.UrlMapping;
 import jakarta.persistence.EntityManager;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
