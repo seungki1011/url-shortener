@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class UrlMapping {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String shortcode;
 
     @Column(nullable = false)
@@ -36,6 +36,10 @@ public class UrlMapping {
     public void incrementViewCount() {
         this.viewCount++;
         this.viewedAt = LocalDateTime.now();
+    }
+
+    public void setShortcode(String shortcode) {
+        this.shortcode = shortcode;
     }
 
     /*
