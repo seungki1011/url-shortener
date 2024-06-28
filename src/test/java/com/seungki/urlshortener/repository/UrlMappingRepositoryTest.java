@@ -35,7 +35,6 @@ class UrlMappingRepositoryTest {
 
     }
 
-
     @DisplayName("숏코드로 검색해서 원본 URL을 찾을 수 있어야한다.")
     @Test
     public void testFindByShortCode() {
@@ -50,6 +49,4 @@ class UrlMappingRepositoryTest {
         assertThat(foundUrl.get().getOriginalUrl()).isEqualTo(urlMapping.getOriginalUrl());
 
     }
-
-
 }
