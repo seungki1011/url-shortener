@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>URL Shortened</title>
+</head>
+<body>
+<h1>Your Shortened URL</h1>
+
+<p th:text="'Shortcode: ' + ${shortcode}"></p>
+
+<a th:href="@{/{shortcode}(shortcode=${shortcode})}"><p th:text="'jjalb.io/' + ${shortcode}"></p></a>
+
+<a th:href="@{/{shortcode}(shortcode=${shortcode})}">Click here to test the shortened URL</a>
+</body>
+</html>
