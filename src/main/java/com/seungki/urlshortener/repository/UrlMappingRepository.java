@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -12,6 +14,7 @@ public class UrlMappingRepository {
 
     final private EntityManager em;
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(UrlMapping urlMapping) {
         em.persist(urlMapping);
     }
