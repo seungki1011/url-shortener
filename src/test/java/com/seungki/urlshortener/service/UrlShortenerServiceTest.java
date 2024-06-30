@@ -10,6 +10,7 @@ import com.seungki.urlshortener.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class UrlShortenerServiceTest {
     @BeforeEach
     public void initData() {
         uss.shortenUrl("https://www.naver.com/");
-        uss.shortenUrl("www.google.com");
+        uss.shortenUrl("https://www.google.com");
     }
 
     @DisplayName("원본URL을 입력으로 주면 (숏코드, 원본URL, 생성시간)이 들어간 튜플이 존재해야한다")
@@ -39,10 +40,11 @@ class UrlShortenerServiceTest {
     public void testShortenUrl() {
 
         String originalUrl = "https://www.youtube.com/";
-        UrlMapping urlMapping = uss.shortenUrl(originalUrl);
+        String shortcode = uss.shortenUrl(originalUrl);
         LocalDateTime now = LocalDateTime.now();
 
-        String shortcode = urlMapping.getShortcode();
+        UrlMapping urlMapping = umr.findByShortCode(shortcode).get();
+
         long secondsDifference = ChronoUnit.SECONDS.between(urlMapping.getCreatedAt(), now);
 
         assertNotNull(urlMapping);
@@ -58,8 +60,8 @@ class UrlShortenerServiceTest {
 
         String originalUrl = "https://www.inflearn.com/";
 
-        String originalShortcode = uss.shortenUrl(originalUrl).getShortcode();
-        String saltUrlShortcode = uss.shortenUrl(originalUrl).getShortcode();
+        String originalShortcode = uss.shortenUrl(originalUrl);
+        String saltUrlShortcode = uss.shortenUrl(originalUrl);
 
         assertThat(originalShortcode).isNotEqualTo(saltUrlShortcode);
     }
@@ -71,10 +73,10 @@ class UrlShortenerServiceTest {
         String shortcode = "qV4ClXW";
         String originalUrl = "https://www.naver.com/";
 
-        UrlMapping findUrlMapping = uss.findOriginalUrl(shortcode);
+        String findOriginalUrl = uss.findOriginalUrl(shortcode);
 
-        assertNotNull(findUrlMapping);
-        assertThat(findUrlMapping.getOriginalUrl()).isEqualTo(originalUrl);
+        assertNotNull(findOriginalUrl);
+        assertThat(findOriginalUrl).isEqualTo(originalUrl);
 
     }
 
@@ -84,9 +86,9 @@ class UrlShortenerServiceTest {
 
         String nonExistingShortcode = "abcd123";
 
-        UrlMapping findUrlMapping = uss.findOriginalUrl(nonExistingShortcode);
+        String findUrl = uss.findOriginalUrl(nonExistingShortcode);
 
-        assertNull(findUrlMapping);
+        assertNull(findUrl);
 
     }
 
@@ -97,10 +99,13 @@ class UrlShortenerServiceTest {
         String shortcode = "qV4ClXW";
 
         uss.findOriginalUrl(shortcode);
-        UrlMapping findUrlMapping = uss.findOriginalUrl(shortcode);
+        uss.findOriginalUrl(shortcode);
 
-        assertThat(findUrlMapping.getViewCount()).isEqualTo(2);
-        assertNotNull(findUrlMapping.getViewedAt());
+        Optional<UrlMapping> urlMapping = umr.findByShortCode(shortcode);
+
+        assertTrue(urlMapping.isPresent());
+        assertThat(urlMapping.get().getViewCount()).isEqualTo(2);
+        assertNotNull(urlMapping.get().getViewedAt());
 
     }
 
