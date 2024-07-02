@@ -1,6 +1,6 @@
-package com.seungki.urlshortener.repository;
+package com.seungki.urlshortener.ssr.repository;
 
-import com.seungki.urlshortener.domain.UrlMapping;
+import com.seungki.urlshortener.ssr.domain.UrlMapping;
 import jakarta.persistence.EntityManager;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

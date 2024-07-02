@@ -1,25 +1,26 @@
 package com.seungki.urlshortener.repository;
 
-import com.seungki.urlshortener.domain.UrlMapping;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.seungki.urlshortener.ssr.domain.UrlMapping;
+import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Transactional
 class UrlMappingRepositoryTest {
 
-    @Autowired EntityManager em;
-    @Autowired UrlMappingRepository umr;
+    @Autowired
+    EntityManager em;
+    @Autowired
+    UrlMappingRepository umr;
 
     @DisplayName("UrlMapping 엔티티를 저장하면 조회가 가능해야 한다.")
     @Test
