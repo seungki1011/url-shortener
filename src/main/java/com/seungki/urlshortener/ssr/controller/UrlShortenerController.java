@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,9 +22,10 @@ public class UrlShortenerController {
     }
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestParam("url") String originalUrl) {
+    public String shortenUrl(@RequestParam("url") String originalUrl, RedirectAttributes redirectAttributes) {
         String shortcode = uss.shortenUrl(originalUrl);
-        return "redirect:/detail/" + shortcode;
+        redirectAttributes.addAttribute("shortcode", shortcode);
+        return "redirect:/detail/{shortcode}";
     }
 
     @GetMapping("/detail/{shortcode}")
@@ -33,10 +35,12 @@ public class UrlShortenerController {
     }
 
     @GetMapping("/{shortcode}")
-    public String redirectToOriginalUrl(@PathVariable String shortcode) {
+    public String redirectToOriginalUrl(@PathVariable String shortcode, RedirectAttributes redirectAttributes) {
         String originalUrl = uss.findOriginalUrl(shortcode);
+
         if (originalUrl != null) {
-            return "redirect:" + originalUrl;
+            redirectAttributes.addAttribute("originalUrl", originalUrl);
+            return "redirect:{originalUrl}";
         } else {
             return "error";
         }
