@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.seungki.urlshortener.ssr.domain.UrlMapping;
 import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
-import com.seungki.urlshortener.ssr.service.UrlShortenerService;
+import com.seungki.urlshortener.ssr.service.UrlShortenService;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class UrlShortenerServiceTest {
+class UrlShortenServiceTest {
 
     @Autowired
     private UrlMappingRepository umr;
     @Autowired
-    private UrlShortenerService uss;
+    private UrlShortenService uss;
     @Autowired
     private EntityManager em;
 

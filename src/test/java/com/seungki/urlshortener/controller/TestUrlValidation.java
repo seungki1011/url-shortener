@@ -1,10 +1,10 @@
-package com.seungki.urlshortener;
+package com.seungki.urlshortener.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import com.seungki.urlshortener.ssr.service.UrlShortenerService;
+import com.seungki.urlshortener.ssr.service.UrlShortenService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class TestUrlValidation {
     private MockMvc mockMvc;
 
     @Autowired
-    private UrlShortenerService uss;
+    private UrlShortenService uss;
 
     @DisplayName("앞에 프로토콜을 붙이지 않은 URL을 사용했을때 검증을 통과하지 못하고 에러가 발생한다")
     @Test

@@ -1,6 +1,6 @@
 package com.seungki.urlshortener.ssr.controller;
 
-import com.seungki.urlshortener.ssr.service.UrlShortenerService;
+import com.seungki.urlshortener.ssr.service.UrlShortenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-public class UrlShortenerController {
+public class UrlShortenController {
 
-    private final UrlShortenerService uss;
+    private final UrlShortenService uss;
 
     @GetMapping({"/", "/shorten"})
     public String shortenerForm(Model model) {

@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UrlShortenerService {
+public class UrlShortenService {
 
     private final UrlMappingRepository umr;
     private final EntityManager em;
@@ -35,7 +35,7 @@ public class UrlShortenerService {
         }
         return shortcode;
     }
-    
+
     public String saveUrlMapping(String originalUrl) {
         String shortcode = generateShortcode(originalUrl);
         UrlMapping urlMapping = new UrlMapping(shortcode, originalUrl, LocalDateTime.now());

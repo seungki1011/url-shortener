@@ -1,11 +1,11 @@
-package com.seungki.urlshortener;
+package com.seungki.urlshortener.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.seungki.urlshortener.ssr.service.UrlShortenerService;
+import com.seungki.urlshortener.ssr.service.UrlShortenService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class TestDuplicateShortcode {
     private MockMvc mockMvc;
 
     @Autowired
-    private UrlShortenerService uss;
+    private UrlShortenService uss;
 
     @DisplayName("같은 URL을 이용한 POST 요청은 성공해야 한다")
     @Test
