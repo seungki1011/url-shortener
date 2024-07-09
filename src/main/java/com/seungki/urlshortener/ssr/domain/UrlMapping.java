@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.domain;
+package com.seungki.urlshortener.ssr.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,5 +44,5 @@ public class UrlMapping {
     public void setShortcode(String shortcode) {
         this.shortcode = shortcode;
     }
-    
+
 }
