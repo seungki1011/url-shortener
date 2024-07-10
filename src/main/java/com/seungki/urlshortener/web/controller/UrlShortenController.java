@@ -1,6 +1,6 @@
-package com.seungki.urlshortener.ssr.controller;
+package com.seungki.urlshortener.web.controller;
 
-import com.seungki.urlshortener.ssr.service.UrlShortenService;
+import com.seungki.urlshortener.web.service.UrlShortenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

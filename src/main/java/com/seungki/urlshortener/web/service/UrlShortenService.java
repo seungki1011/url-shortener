@@ -1,10 +1,10 @@
-package com.seungki.urlshortener.ssr.service;
+package com.seungki.urlshortener.web.service;
 
 import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcode;
 import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcodeWithSalt;
 
-import com.seungki.urlshortener.ssr.domain.UrlMapping;
-import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
+import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;

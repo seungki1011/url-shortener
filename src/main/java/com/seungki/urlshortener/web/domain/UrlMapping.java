@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.ssr.domain;
+package com.seungki.urlshortener.web.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

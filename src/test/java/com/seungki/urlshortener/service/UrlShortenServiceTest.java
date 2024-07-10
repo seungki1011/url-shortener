@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.seungki.urlshortener.ssr.domain.UrlMapping;
-import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
-import com.seungki.urlshortener.ssr.service.UrlShortenService;
+import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.repository.UrlMappingRepository;
+import com.seungki.urlshortener.web.service.UrlShortenService;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

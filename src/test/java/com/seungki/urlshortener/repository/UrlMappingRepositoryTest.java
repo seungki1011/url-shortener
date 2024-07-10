@@ -2,8 +2,8 @@ package com.seungki.urlshortener.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.seungki.urlshortener.ssr.domain.UrlMapping;
-import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
+import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.Optional;

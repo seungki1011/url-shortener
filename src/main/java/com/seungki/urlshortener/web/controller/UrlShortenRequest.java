@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.ssr.controller;
+package com.seungki.urlshortener.web.controller;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
