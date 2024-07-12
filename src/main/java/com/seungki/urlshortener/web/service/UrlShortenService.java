@@ -4,6 +4,8 @@ import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcode;
 import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcodeWithSalt;
 
 import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.exception.ShortcodeNotFoundException;
+import com.seungki.urlshortener.web.exception.UrlNotFoundException;
 import com.seungki.urlshortener.web.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -52,13 +54,19 @@ public class UrlShortenService {
     }
 
     @Transactional
-    public String findOriginalUrl(String shortcode) {
+    public UrlMapping findOriginalUrl(String shortcode) {
         return umr.findByShortCode(shortcode)
                 .map(urlMapping -> {
                     urlMapping.incrementViewCount();
-                    return urlMapping.getOriginalUrl();
+                    return urlMapping;
                 })
-                .orElse(null);
+                .orElseThrow(() -> new UrlNotFoundException(shortcode));
+    }
+
+    @Transactional(readOnly = true)
+    public UrlMapping findMatchingUrl(String shortcode) {
+        return umr.findByShortCode(shortcode)
+                .orElseThrow(() -> new ShortcodeNotFoundException(shortcode));
     }
 
 }

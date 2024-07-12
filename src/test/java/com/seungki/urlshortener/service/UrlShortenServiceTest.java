@@ -2,10 +2,11 @@ package com.seungki.urlshortener.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.exception.UrlNotFoundException;
 import com.seungki.urlshortener.web.repository.UrlMappingRepository;
 import com.seungki.urlshortener.web.service.UrlShortenService;
 import jakarta.persistence.EntityManager;
@@ -74,22 +75,22 @@ class UrlShortenServiceTest {
         String shortcode = "qV4ClXW";
         String originalUrl = "https://www.naver.com/";
 
-        String findOriginalUrl = uss.findOriginalUrl(shortcode);
+        String findOriginalUrl = uss.findOriginalUrl(shortcode).getOriginalUrl();
 
         assertNotNull(findOriginalUrl);
         assertThat(findOriginalUrl).isEqualTo(originalUrl);
 
     }
 
-    @DisplayName("존재하지 않는 숏코드로 원본 URL을 찾을시 null 반환")
+    @DisplayName("존재하지 않는 숏코드로 원본 URL을 찾을시 UrlNotFoundException 발생")
     @Test
     public void testNullForNonExistingShortcode() {
 
         String nonExistingShortcode = "abcd123";
 
-        String findUrl = uss.findOriginalUrl(nonExistingShortcode);
-
-        assertNull(findUrl);
+        assertThrows(UrlNotFoundException.class, () -> {
+            String findUrl = uss.findOriginalUrl(nonExistingShortcode).getOriginalUrl();
+        });
 
     }
 
