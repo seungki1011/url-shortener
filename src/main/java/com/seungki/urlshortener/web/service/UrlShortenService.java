@@ -30,9 +30,8 @@ public class UrlShortenService {
         try {
             shortcode = saveUrlMapping(originalUrl);
             em.flush();
-            log.info("[No Duplication] shortcode = {}", shortcode);
         } catch (DataIntegrityViolationException | ConstraintViolationException e) {
-            log.info("[Exception!] ", e);
+            log.info("[Catch ConstraintViolationException | DataIntegrityViolationException] ", e);
             shortcode = handleShortcodeDuplication(originalUrl);
         }
         return shortcode;
