@@ -1,6 +1,9 @@
-package com.seungki.urlshortener.ssr.controller;
+package com.seungki.urlshortener.web.controller;
 
-import com.seungki.urlshortener.ssr.service.UrlShortenerService;
+import com.seungki.urlshortener.web.controller.dto.UrlDetailResponse;
+import com.seungki.urlshortener.web.controller.dto.UrlShortenRequest;
+import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.service.UrlShortenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-public class UrlShortenerController {
+public class UrlShortenController {
 
-    private final UrlShortenerService uss;
+    private final UrlShortenService uss;
 
     @GetMapping({"/", "/shorten"})
     public String shortenerForm(Model model) {
@@ -39,19 +42,16 @@ public class UrlShortenerController {
 
     @GetMapping("/detail/{shortcode}")
     public String shortenerDetail(@PathVariable String shortcode, Model model) {
-        model.addAttribute("shortcode", shortcode);
+        UrlMapping urlMapping = uss.findMatchingUrl(shortcode);
+        UrlDetailResponse detailResponse = new UrlDetailResponse(urlMapping);
+        model.addAttribute("detailResponse", detailResponse);
         return "shortener_detail";
     }
 
     @GetMapping("/{shortcode}")
     public String redirectToOriginalUrl(@PathVariable String shortcode, RedirectAttributes redirectAttributes) {
-        String originalUrl = uss.findOriginalUrl(shortcode);
-
-        if (originalUrl != null) {
-            redirectAttributes.addAttribute("originalUrl", originalUrl);
-            return "redirect:{originalUrl}";
-        } else {
-            return "error";
-        }
+        UrlMapping urlMapping = uss.findOriginalUrl(shortcode);
+        String originalUrl = urlMapping.getOriginalUrl();
+        return "redirect:" + originalUrl;
     }
 }

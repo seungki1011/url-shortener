@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.ssr.domain;
+package com.seungki.urlshortener.web.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,12 +44,5 @@ public class UrlMapping {
     public void setShortcode(String shortcode) {
         this.shortcode = shortcode;
     }
-
-    /*
-      추후 회원 가입 기능을 추가할 때 사용
-     */
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "member_id")
-    // private Member member;
 
 }

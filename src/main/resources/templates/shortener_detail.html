@@ -4,12 +4,21 @@
     <title>URL Shortened</title>
 </head>
 <body>
-<h1>Your Shortened URL</h1>
+<h1>단축 URL의 상세 정보</h1>
 
-<p th:text="'Shortcode: ' + ${shortcode}"></p>
+<p th:text="'숏코드(숏키): ' + ${detailResponse.shortcode}"></p>
 
-<a th:href="@{/{shortcode}(shortcode=${shortcode})}"><p th:text="'jjalb.io/' + ${shortcode}"></p></a>
+<a th:href="@{/{shortcode}(shortcode=${detailResponse.shortcode})}">
+    <p th:text="'http://localhost:8080/' + ${detailResponse.shortcode}"></p>
+</a>
 
-<a th:href="@{/{shortcode}(shortcode=${shortcode})}">Click here to test the shortened URL</a>
+<p th:text="'생성된 날짜: ' + ${detailResponse.createdAt}"></p>
+
+<p th:text="'마지막으로 조회된 날짜: ' + ${detailResponse.viewedAt}"></p>
+
+<p th:text="'단축 URL의 조회수: ' + ${detailResponse.viewCount}"></p>
+
+<a th:href="@{/}">URL 단축하러 가기</a>
+
 </body>
 </html>

@@ -1,10 +1,12 @@
-package com.seungki.urlshortener.ssr.service;
+package com.seungki.urlshortener.web.service;
 
 import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcode;
 import static com.seungki.urlshortener.util.ShortCodeUtil.generateShortcodeWithSalt;
 
-import com.seungki.urlshortener.ssr.domain.UrlMapping;
-import com.seungki.urlshortener.ssr.repository.UrlMappingRepository;
+import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.web.exception.ShortcodeNotFoundException;
+import com.seungki.urlshortener.web.exception.UrlNotFoundException;
+import com.seungki.urlshortener.web.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UrlShortenerService {
+public class UrlShortenService {
 
     private final UrlMappingRepository umr;
     private final EntityManager em;
@@ -28,14 +30,13 @@ public class UrlShortenerService {
         try {
             shortcode = saveUrlMapping(originalUrl);
             em.flush();
-            log.info("[No Duplication] shortcode = {}", shortcode);
         } catch (DataIntegrityViolationException | ConstraintViolationException e) {
-            log.info("[Exception!] ", e);
+            log.info("[Catch ConstraintViolationException | DataIntegrityViolationException] ", e);
             shortcode = handleShortcodeDuplication(originalUrl);
         }
         return shortcode;
     }
-    
+
     public String saveUrlMapping(String originalUrl) {
         String shortcode = generateShortcode(originalUrl);
         UrlMapping urlMapping = new UrlMapping(shortcode, originalUrl, LocalDateTime.now());
@@ -52,13 +53,19 @@ public class UrlShortenerService {
     }
 
     @Transactional
-    public String findOriginalUrl(String shortcode) {
+    public UrlMapping findOriginalUrl(String shortcode) {
         return umr.findByShortCode(shortcode)
                 .map(urlMapping -> {
                     urlMapping.incrementViewCount();
-                    return urlMapping.getOriginalUrl();
+                    return urlMapping;
                 })
-                .orElse(null);
+                .orElseThrow(() -> new UrlNotFoundException(shortcode));
+    }
+
+    @Transactional(readOnly = true)
+    public UrlMapping findMatchingUrl(String shortcode) {
+        return umr.findByShortCode(shortcode)
+                .orElseThrow(() -> new ShortcodeNotFoundException(shortcode));
     }
 
 }

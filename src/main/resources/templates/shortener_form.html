@@ -4,11 +4,11 @@
     <title>URL Shortener</title>
 </head>
 <body>
-<h1>URL Shortener</h1>
+<h1>URL 단축기</h1>
 <form action="#" th:action="@{/shorten}" th:object="${urlShortenRequest}" method="post">
-    <input type="text" id="url" name="url" placeholder="Enter URL" th:field="*{url}" required/>
+    <input type="text" id="url" name="url" placeholder="단축할 URL을 입력하세요" th:field="*{url}" required/>
     <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
-    <button type="submit">Shorten</button>
+    <button type="submit">단축하기</button>
 </form>
 <div th:if="${error}">
     <p th:text="${error}"></p>
