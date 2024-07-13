@@ -12,16 +12,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ShortcodeNotFoundException.class)
     public String handleShortcodeNotFoundException(ShortcodeNotFoundException ex, Model model) {
         model.addAttribute("error", "404 Not Found");
-        model.addAttribute("message", ex.getMessage());
         return "error/404";
     }
 
     @ExceptionHandler(UrlNotFoundException.class)
     public String handleUrlNotFoundException(UrlNotFoundException ex, Model model) {
         model.addAttribute("error", "URL Not Found");
-        model.addAttribute("message", ex.getMessage());
         model.addAttribute("shortcode", ex.getShortcode());
         return "error/UrlNotFound";
     }
-    
+
+    @ExceptionHandler(ShortcodeGenerationException.class)
+    public String handleShortcodeGenerationException(UrlNotFoundException ex, Model model) {
+        model.addAttribute("error", "Shortcode Recreation Failed");
+        return "error/500";
+    }
+
 }
