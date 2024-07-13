@@ -1,24 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>URL Shortened</title>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>단축 URL 상세 정보</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 75vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .paper-box {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 1.5em 0;
+        }
+        .copy-button {
+            background-color: #cca20a;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            /* margin-left: 10px; */
+        }
+        .copy-button:hover {
+            background-color: #b8930f;
+        }
+        .url-container {
+            display: flex;
+            align-items: center;
+        }
+        .url-container p {
+            flex: 1;
+            margin-right: 10px;
+            word-break: break-all;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 0.5em 0;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .shorten {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <h1>단축 URL의 상세 정보</h1>
 
-<p th:text="'숏코드(숏키): ' + ${detailResponse.shortcode}"></p>
+<div class="paper-box">
+    <p th:text="'숏코드(숏키): ' + ${detailResponse.shortcode}"></p>
 
-<a th:href="@{/{shortcode}(shortcode=${detailResponse.shortcode})}">
-    <p th:text="'http://localhost:8080/' + ${detailResponse.shortcode}"></p>
-</a>
+    <!--    <a th:href="@{/{shortcode}(shortcode=${detailResponse.shortcode})}">-->
+    <!--        <p th:text="'http://localhost:8080/' + ${detailResponse.shortcode}"></p>-->
+    <!--    </a>-->
+    <div class="url-container">
+        <a th:href="@{/{shortcode}(shortcode=${detailResponse.shortcode})}">
+            <p id="shortUrl" th:text="'http://localhost:8080/' + ${detailResponse.shortcode}"></p>
+        </a>
+        <button class="copy-button" name="copyButton" onclick="copy()">복사</button>
+    </div>
 
-<p th:text="'생성된 날짜: ' + ${detailResponse.createdAt}"></p>
+    <p th:text="'생성된 날짜: ' + ${detailResponse.createdAt}"></p>
 
-<p th:text="'마지막으로 조회된 날짜: ' + ${detailResponse.viewedAt}"></p>
+    <p th:text="'마지막으로 조회된 날짜: ' + (${detailResponse.viewedAt} ?: '조회되지 않음')"></p>
 
-<p th:text="'단축 URL의 조회수: ' + ${detailResponse.viewCount}"></p>
+    <p th:text="'단축 URL의 조회수: ' + ${detailResponse.viewCount}"></p>
+</div>
 
-<a th:href="@{/}">URL 단축하러 가기</a>
+<a class="shorten" th:href="@{/}">URL 단축하러 가기</a>
+
+<script>
+    const copy = () => {
+        const transformedUrl = document.querySelector("#shortUrl").innerText;
+
+        navigator.clipboard.writeText(transformedUrl)
+            .then(() => {
+                const copyButton = document.querySelector("[name='copyButton']");
+                copyButton.innerText = "복사 완료!";
+                alert('URL 복사 완료!');
+            })
+            .catch(err => {
+                console.error('복사 중 에러가 발생!', err);
+            });
+    }
+</script>
 
 </body>
 </html>
