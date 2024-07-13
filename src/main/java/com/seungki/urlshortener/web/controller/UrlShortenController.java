@@ -35,7 +35,7 @@ public class UrlShortenController {
             return "shortener_form";
         }
 
-        String shortcode = uss.shortenUrl(usr.getUrl());
+        String shortcode = uss.shortenUrl(usr.getUrl()).getShortcode();
         redirectAttributes.addAttribute("shortcode", shortcode);
         return "redirect:/detail/{shortcode}";
     }

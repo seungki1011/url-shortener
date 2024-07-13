@@ -25,9 +25,9 @@ public class UrlShortenService {
     private final int MAX_RETRIES = 10;
     private final UrlMappingRepository umr;
     private final EntityManager em;
-    
+
     @Transactional
-    public String shortenUrl(String originalUrl) {
+    public UrlMapping shortenUrl(String originalUrl) {
         String shortcode;
 
         for (int i = 0; i < MAX_RETRIES; i++) {
@@ -40,7 +40,7 @@ public class UrlShortenService {
                 UrlMapping urlMapping = new UrlMapping(shortcode, originalUrl, LocalDateTime.now());
                 umr.save(urlMapping);
                 em.flush();
-                return shortcode;
+                return urlMapping;
             } catch (DataIntegrityViolationException | ConstraintViolationException e) {
                 log.warn("[Shortcode Collision] Retrying... attempt {}", i + 1);
             }
