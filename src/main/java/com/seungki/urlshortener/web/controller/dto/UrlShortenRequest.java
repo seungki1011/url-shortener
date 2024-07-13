@@ -14,7 +14,7 @@ public class UrlShortenRequest {
             ),
             @Pattern(
                     regexp = "[a-zA-Z0-9-._~:/?#@!$&'()*+,;=%]+",
-                    message = "URL은 영문자, 숫자 그리고 특수 문자(._~:/?#@!$&'()*+,;=%)만 허용합니다"
+                    message = "URL은 영문자, 숫자 그리고 특수 문자(._~:/?#@!$&'()*+,;=%)의 조합만 허용합니다"
             )
     })
     private String url;

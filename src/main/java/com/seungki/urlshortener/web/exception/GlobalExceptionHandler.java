@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ShortcodeNotFoundException.class)
-    public String handleShortcodeNotFoundException(ShortcodeNotFoundException ex, Model model) {
+    public String handleShortcodeNotFoundException(Model model) {
         model.addAttribute("error", "404 Not Found");
         return "error/404";
     }
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ShortcodeGenerationException.class)
-    public String handleShortcodeGenerationException(UrlNotFoundException ex, Model model) {
+    public String handleShortcodeGenerationException(Model model) {
         model.addAttribute("error", "Shortcode Recreation Failed");
         return "error/500";
     }
