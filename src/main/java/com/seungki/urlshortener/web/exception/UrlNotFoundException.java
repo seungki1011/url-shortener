@@ -9,7 +9,7 @@ public class UrlNotFoundException extends RuntimeException {
     }
 
     public UrlNotFoundException(String shortcode) {
-        super("[UrlNotFoundException] shortcode = " + shortcode);
+        super("[UrlNotFoundException] shortcode: " + shortcode + " was not found!");
         this.shortcode = shortcode;
     }
 
