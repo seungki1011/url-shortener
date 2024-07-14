@@ -12,7 +12,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(ShortcodeNotFoundException.class)
     public String handleShortcodeNotFoundException(ShortcodeNotFoundException ex, Model model) {
         log.info("[ShortcodeNotFoundException] message: {}", ex.getMessage());
-        model.addAttribute("error", "404 Not Found");
+        model.addAttribute("error", "Shortcode Not Found");
         return "error/404";
     }
 
