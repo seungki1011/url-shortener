@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/vi")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class UrlShortenApiController {
 
@@ -34,7 +34,7 @@ public class UrlShortenApiController {
 
     @GetMapping("/detail/{shortcode}")
     public ResponseEntity<UrlShortenResponse> getDetail(@PathVariable String shortcode) {
-        UrlMapping urlMapping = uss.findOriginalUrl(shortcode);
+        UrlMapping urlMapping = uss.findMatchingUrl(shortcode);
         UrlShortenResponse response = new UrlShortenResponse(urlMapping);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
