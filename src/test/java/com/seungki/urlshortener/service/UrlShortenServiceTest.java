@@ -42,7 +42,7 @@ class UrlShortenServiceTest {
     public void testShortenUrl() {
 
         String originalUrl = "https://www.youtube.com/";
-        String shortcode = uss.shortenUrl(originalUrl);
+        String shortcode = uss.shortenUrl(originalUrl).getShortcode();
         LocalDateTime now = LocalDateTime.now();
 
         UrlMapping urlMapping = umr.findByShortCode(shortcode).get();
@@ -62,8 +62,8 @@ class UrlShortenServiceTest {
 
         String originalUrl = "https://www.inflearn.com/";
 
-        String originalShortcode = uss.shortenUrl(originalUrl);
-        String saltUrlShortcode = uss.shortenUrl(originalUrl);
+        String originalShortcode = uss.shortenUrl(originalUrl).getShortcode();
+        String saltUrlShortcode = uss.shortenUrl(originalUrl).getShortcode();
 
         assertThat(originalShortcode).isNotEqualTo(saltUrlShortcode);
     }
