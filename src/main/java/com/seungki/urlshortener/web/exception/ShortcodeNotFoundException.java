@@ -6,7 +6,7 @@ public class ShortcodeNotFoundException extends RuntimeException {
     }
 
     public ShortcodeNotFoundException(String shortcode) {
-        super("[ShortcodeNotFoundException] shortcode = " + shortcode);
+        super("[ShortcodeNotFoundException] shortcode: " + shortcode + " was not found!");
     }
 
 }

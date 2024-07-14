@@ -48,8 +48,8 @@ public class TestDuplicateShortcode {
 
         String originalUrl = "https://www.inflearn.com/";
 
-        String originalShortcode = uss.shortenUrl(originalUrl);
-        String saltUrlShortcode = uss.shortenUrl(originalUrl);
+        String originalShortcode = uss.shortenUrl(originalUrl).getShortcode();
+        String saltUrlShortcode = uss.shortenUrl(originalUrl).getShortcode();
 
         assertThat(originalShortcode).isNotEqualTo(saltUrlShortcode);
     }
