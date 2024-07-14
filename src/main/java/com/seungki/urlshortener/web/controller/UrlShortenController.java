@@ -49,7 +49,7 @@ public class UrlShortenController {
     }
 
     @GetMapping("/{shortcode}")
-    public String redirectToOriginalUrl(@PathVariable String shortcode, RedirectAttributes redirectAttributes) {
+    public String redirectToOriginalUrl(@PathVariable String shortcode) {
         UrlMapping urlMapping = uss.findOriginalUrl(shortcode);
         String originalUrl = urlMapping.getOriginalUrl();
         return "redirect:" + originalUrl;

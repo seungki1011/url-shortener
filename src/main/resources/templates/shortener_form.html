@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>URL Shortener</title>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>URL 단축기</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 75vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 1.5em 0;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 0.5em 0;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            text-align: left;
+            margin-bottom: 1em;
+        }
+        .is-invalid {
+            border-color: #dc3545;
+            border-width: 2px;
+        }
+    </style>
 </head>
 <body>
-<h1>URL 단축기</h1>
-<form action="#" th:action="@{/shorten}" th:object="${urlShortenRequest}" method="post">
-    <input type="text" id="url" name="url" placeholder="단축할 URL을 입력하세요" th:field="*{url}" required/>
-    <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
-    <button type="submit">단축하기</button>
-</form>
-<div th:if="${error}">
-    <p th:text="${error}"></p>
+<div class="container mt-5">
+    <h1 class="text-center">URL 단축기</h1>
+    <form action="#" th:action="@{/shorten}" th:object="${urlShortenRequest}" method="post" class="mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <input type="text" id="url" name="url" class="form-control" placeholder="단축할 URL을 입력하세요"
+                           th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''"
+                           th:field="*{url}"
+                           required/>
+                    <button type="submit" class="btn btn-primary">단축하기</button>
+                </div>
+                <div class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
+            </div>
+        </div>
+    </form>
+    <div th:if="${error}" class="alert alert-danger mt-3">
+        <p th:text="${error}"></p>
+    </div>
 </div>
 </body>
 </html>
