@@ -19,7 +19,7 @@ Bitly를 사용해서 단축 URL을 얻어보면 다음과 같다.
 
 짧아진 링크를 살펴보면 도메인인 `https://bit.ly/`뒤에 `3VzBS9q`라는 문자 조합이 붙어 있는 것을 확인할 수 있다. 이 문자 조합을 [슬러그(slug)](https://developer.mozilla.org/ko/docs/Glossary/Slug) 또는 숏코드(shortcode, shortkey)라고 부른다.
 
-**URL 단축의 핵심이 원본 URL을 유일한(unique) 숏코드로 매핑하는 로직을 구현하는 것이다.**
+**URL 단축의 핵심은 원본 URL을 유일한(unique) 숏코드로 매핑하는 로직을 구현하는 것이다.**
 
 <br>
 
@@ -28,8 +28,7 @@ Bitly를 사용해서 단축 URL을 얻어보면 다음과 같다.
 * [(Url Shortener - 1)URL 단축 서비스의 원리 파악하기](https://seungki1011.github.io/posts/url-shortener-project-1/)
 * [(Url Shortener - 2)URL 단축 서비스의 요구 사항 및 설계](https://seungki1011.github.io/posts/url-shortener-project-2/)
 * [(Url Shortener - 3)URL 단축 서비스 개발 시작, 발생한 문제들](https://seungki1011.github.io/posts/url-shortener-project-3/)
-
-<br>
+* [(Url Shortener - 4)URL 단축 서비스 API 개발](https://seungki1011.github.io/posts/url-shortener-project-3/)
 
 ---
 
@@ -55,17 +54,120 @@ Bitly를 사용해서 단축 URL을 얻어보면 다음과 같다.
 
 - H2 `2.2.224` (테스트)
 
+---
+
+## 3. 서버사이드 랜더링 결과
+
+<br>
+
+<p align="center">   <img src="https://seungki1011.github.io/post_images/2024-07-01-url-shortener-project-4/view1.png" alt="http" style="width: 80%;"> </p>
+
+<p align="center">입력 폼</p>
+
+<br>
+
+<p align="center">   <img src="https://seungki1011.github.io/post_images/2024-07-01-url-shortener-project-4/view2.png" alt="http" style="width: 80%;"> </p>
+
+<p align="center">단축 URL 상세 정보</p>
+
+<br>
+
+<p align="center">   <img src="https://seungki1011.github.io/post_images/2024-07-01-url-shortener-project-4/view3.png" alt="http" style="width: 80%;"> </p>
+
+<p align="center">URL 검증</p>
+
 <br>
 
 ---
 
-## 3. 요구 사항
+## 4. API 명세
+
+| 메서드 |          API 경로           | 출력 포맷 |              요청 파라미터               |           요청 본문            |         기능 설명         |
+| :----: | :-------------------------: | :-------: | :--------------------------------------: | :----------------------------: | :-----------------------: |
+| `POST` |      `api/v1/shorten`       |   JSON    |                                          | `url` : 단축할 원본 URL (JSON) |         URL 단축          |
+| `GET`  | `api/v1/detail/{shortcode}` |   JSON    | `shortcode` : 단축 URL 숏코드 (`String`) |                                | 단축 URL의 상세 정보 조회 |
+
+<br>
+
+| Status |             Code              |                          설명                           |
+| :----: | :---------------------------: | :-----------------------------------------------------: |
+| `400`  |      `VALIDATION_ERROR`       |  입력값이 올바르지 않아서 검증을 통과하지 못하는 경우   |
+| `404`  |     `SHORTCODE_NOT_FOUND`     |     해당 숏코드가 DB에 없는 경우 (상세 페이지 조회)     |
+| `404`  |        `URL_NOT_FOUND`        | 해당 단축 URL의 숏코드가 DB에 없는 경우 (단축 URL 조회) |
+| `500`  | `SHORTCODE_GENERATION_FAILED` |    중복된 숏코드에 대한 숏코드 재생성이 실패한 경우.    |
+
+<br>
+
+---
+
+## 5. API 사용 예시
+
+* `GET : api/v1/shorten`
+
+| 메서드 |          API 경로           | 출력 포맷 |              요청 파라미터               |           요청 본문            |          기능 설명          |
+| :----: | :-------------------------: | :-------: | :--------------------------------------: | :----------------------------: | :-------------------------: |
+| `POST` |      `api/v1/shorten`       |   JSON    |                                          | `url` : 단축할 원본 URL (JSON) |          URL 단축           |
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"url":"https://www.youtube.com/watch?v=xvFZjo5PgG0"}' http://localhost:8080/api/v1/shorten
+```
+
+<br>
+
+결과
+
+```
+{
+  "shortcode": "apHgn4b",
+  "originalUrl": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+  "createdAt": "2024-07-05T10:25:00.701936",
+  "viewedAt": null,
+  "viewCount": 0
+}
+```
+
+<br>
+
+* `GET : api/v1/detail/{shortcode}`
+
+| 메서드 |          API 경로           | 출력 포맷 |              요청 파라미터               | 요청 본문 |         기능 설명         |
+| :----: | :-------------------------: | :-------: | :--------------------------------------: | :-------: | :-----------------------: |
+| `GET`  | `api/v1/detail/{shortcode}` |   JSON    | `shortcode` : 단축 URL 숏코드 (`String`) |           | 단축 URL의 상세 정보 조회 |
+
+```bash
+curl "localhost:8080/api/v1/detail/apHgn4b"
+```
+
+<br>
+
+결과
+
+```json
+{
+  "shortcode": "apHgn4b",
+  "originalUrl": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+  "createdAt": "2024-07-05T10:25:00.701936",
+  "viewedAt": null,
+  "viewCount": 0
+}
+```
+
+<br>
+
+---
+
+## Reference
+
+1. [How to implemenet Tiny URL](https://www.youtube.com/watch?v=eCLqmPBIEYs&t=389s)
+2. [Design a Shortener like Tiny URL](https://www.youtube.com/watch?v=zgIyzEEXfiA)
+3. [문자를 다루는 인코딩 규칙](https://www.youtube.com/watch?v=6hvJr0-adtg)
+4. [Base64 인코딩 원리](https://www.youtube.com/watch?v=A8tO4D1Gtc0&t=3s)
+5. [https://www.freecodecamp.org/news/what-is-base64-encoding/](https://www.freecodecamp.org/news/what-is-base64-encoding/)
+6. [https://en.wikipedia.org/wiki/Binary-to-text_encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding)
 
 
 
 
-
-## 4. API
 
 
 
