@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.web.exception;
+package com.seungki.urlshortener.common.exception;
 
 public class ShortcodeGenerationException extends RuntimeException {
     public ShortcodeGenerationException() {

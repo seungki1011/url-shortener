@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.api.controller.dto;
+package com.seungki.urlshortener.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class UrlShortenRequest {
-    @NotEmpty(message = "공백을 허용하지 않습니다")
+    @NotEmpty(message = "URL은 공백을 허용하지 않습니다")
     @Pattern.List({
             @Pattern(
                     regexp = "^(http://|https://).*",
@@ -14,11 +14,11 @@ public class UrlShortenRequest {
             ),
             @Pattern(
                     regexp = "[a-zA-Z0-9-._~:/?#@!$&'()*+,;=%]+",
-                    message = "URL은 영문자, 숫자 그리고 특수 문자(._~:/?#@!$&'()*+,;=%)만 허용합니다"
+                    message = "URL은 영문자, 숫자 그리고 특수 문자(._~:/?#@!$&'()*+,;=%)의 조합만 허용합니다"
             )
     })
     private String url;
-    
+
     public void setUrl(String url) {
         this.url = url;
     }

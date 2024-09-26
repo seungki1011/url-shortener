@@ -1,9 +1,9 @@
 package com.seungki.urlshortener.web.controller;
 
-import com.seungki.urlshortener.web.controller.dto.UrlDetailResponse;
-import com.seungki.urlshortener.web.controller.dto.UrlShortenRequest;
-import com.seungki.urlshortener.web.domain.UrlMapping;
-import com.seungki.urlshortener.web.service.UrlShortenService;
+import com.seungki.urlshortener.common.domain.UrlMapping;
+import com.seungki.urlshortener.common.service.UrlShortenService;
+import com.seungki.urlshortener.web.dto.UrlDetailResponse;
+import com.seungki.urlshortener.web.dto.UrlShortenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.api.controller.exception;
+package com.seungki.urlshortener.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
