@@ -5,14 +5,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.seungki.urlshortener.web.service.UrlShortenService;
+import com.seungki.urlshortener.common.repository.UrlMappingRepository;
+import com.seungki.urlshortener.common.service.UrlShortenService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,6 +24,15 @@ public class TestDuplicateShortcode {
 
     @Autowired
     private UrlShortenService uss;
+
+    @Autowired
+    private UrlMappingRepository urlMappingRepository;
+
+    @BeforeEach
+    public void init() {
+        urlMappingRepository.deleteAll();
+    }
+
 
     @DisplayName("같은 URL을 이용한 POST 요청은 성공해야 한다")
     @Test
@@ -41,8 +51,8 @@ public class TestDuplicateShortcode {
 
     }
 
-    @DisplayName("중복된 URL로 shortenUrl()을 두 번 호출하는 경우 숏코드가 서로 달라야 한다")
-    @Transactional
+    @DisplayName("중복된 URL로 URL 단축을 수행하는 경우 숏코드가 서로 달라야 한다")
+    //  @Transactional
     @Test
     public void test_duplicate_shortcode() {
 
