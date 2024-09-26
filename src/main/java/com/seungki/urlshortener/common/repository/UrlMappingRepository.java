@@ -1,6 +1,6 @@
-package com.seungki.urlshortener.web.repository;
+package com.seungki.urlshortener.common.repository;
 
-import com.seungki.urlshortener.web.domain.UrlMapping;
+import com.seungki.urlshortener.common.domain.UrlMapping;
 import jakarta.persistence.EntityManager;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,11 @@ public class UrlMappingRepository {
                 .orElse(null);
 
         return Optional.ofNullable(urlMapping);
+    }
+
+    @Transactional
+    public void deleteAll() {
+        em.createQuery("DELETE FROM UrlMapping").executeUpdate();
     }
 
 }

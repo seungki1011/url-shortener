@@ -1,5 +1,8 @@
-package com.seungki.urlshortener.web.exception;
+package com.seungki.urlshortener.web.controller;
 
+import com.seungki.urlshortener.common.exception.ShortcodeGenerationException;
+import com.seungki.urlshortener.common.exception.ShortcodeNotFoundException;
+import com.seungki.urlshortener.common.exception.UrlNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

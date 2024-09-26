@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.seungki.urlshortener.web.domain.UrlMapping;
-import com.seungki.urlshortener.web.exception.UrlNotFoundException;
-import com.seungki.urlshortener.web.repository.UrlMappingRepository;
-import com.seungki.urlshortener.web.service.UrlShortenService;
+import com.seungki.urlshortener.common.domain.UrlMapping;
+import com.seungki.urlshortener.common.exception.UrlNotFoundException;
+import com.seungki.urlshortener.common.repository.UrlMappingRepository;
+import com.seungki.urlshortener.common.service.UrlShortenService;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -37,7 +37,7 @@ class UrlShortenServiceTest {
         uss.shortenUrl("https://www.google.com");
     }
 
-    @DisplayName("원본URL을 입력으로 주면 (숏코드, 원본URL, 생성시간)이 들어간 튜플이 존재해야한다")
+    @DisplayName("원본URL을 단축하면 관련 상세정보를 응답으로 받는다")
     @Test
     public void testShortenUrl() {
 
@@ -68,7 +68,7 @@ class UrlShortenServiceTest {
         assertThat(originalShortcode).isNotEqualTo(saltUrlShortcode);
     }
 
-    @DisplayName("qV4ClXW -> https://www.naver.com/")
+    @DisplayName("다음의 숏코드로 조회할 수 있다: qV4ClXW -> https://www.naver.com/")
     @Test
     public void testFindOriginalUrl() {
 
@@ -94,7 +94,7 @@ class UrlShortenServiceTest {
 
     }
 
-    @DisplayName("findOriginalUrl()로 성공적으로 조회시 viewCount 증가, viewedAt 업데이트")
+    @DisplayName("원본URL을 성공적으로 조회시 조회수 증가, 조회 날짜 업데이트")
     @Test
     public void testIncrementViewCount() {
 

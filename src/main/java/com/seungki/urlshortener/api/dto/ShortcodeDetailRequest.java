@@ -1,4 +1,4 @@
-package com.seungki.urlshortener.api.controller.dto;
+package com.seungki.urlshortener.api.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

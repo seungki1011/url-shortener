@@ -2,8 +2,8 @@ package com.seungki.urlshortener.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.seungki.urlshortener.web.domain.UrlMapping;
-import com.seungki.urlshortener.web.repository.UrlMappingRepository;
+import com.seungki.urlshortener.common.domain.UrlMapping;
+import com.seungki.urlshortener.common.repository.UrlMappingRepository;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,7 +22,7 @@ class UrlMappingRepositoryTest {
     @Autowired
     UrlMappingRepository umr;
 
-    @DisplayName("UrlMapping 엔티티를 저장하면 조회가 가능해야 한다.")
+    @DisplayName("엔티티를 저장하면 조회할 수 있다")
     @Test
     public void testSaveUrlMapping() {
         UrlMapping urlMapping = new UrlMapping("abc123", "https://www.naver.com", LocalDateTime.now());
@@ -36,7 +36,7 @@ class UrlMappingRepositoryTest {
 
     }
 
-    @DisplayName("숏코드로 검색해서 원본 URL을 찾을 수 있어야한다.")
+    @DisplayName("숏코드 원본URL을 조회할 수 있어야 한다")
     @Test
     public void testFindByShortCode() {
 
